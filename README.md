@@ -1,117 +1,127 @@
-# Análisis de Pérdidas por Cierres de Puertos por Anomalías SST
+# Peruvian Fisheries: SST impact analysis
 
-Este proyecto analiza el impacto económico de los cierres de puertos peruanos causados por anomalías en la temperatura superficial del mar (SST).
+This project analyzes how sea surface temperature (SST) anomalies affect Peruvian fishing ports, specifically focusing on port closures and their economic impact on fisheries production.
 
-## Estructura del Proyecto
+## Overview
+
+The analysis examines the relationship between SST anomalies and port operations in Peru's fishing industry. By combining satellite-derived SST data with fisheries production records, we assess the economic losses associated with port closures during periods of extreme SST conditions.
+
+## Project Structure
 
 ```
 peru_produccion/
-├── data/                    # Datos del proyecto (no incluidos en el repositorio)
-│   ├── MODIST/             # Datos de temperatura superficial del mar
-│   ├── imarpe/             # Datos de producción pesquera
-│   └── puertos/            # Datos de puertos
-├── results/                 # Resultados del análisis (no incluidos en el repositorio)
-├── src/                     # Código fuente principal
+├── data/                    # Project data (not included in repository)
+│   ├── MODIST/             # Sea surface temperature data
+│   ├── imarpe/             # Fisheries production data
+│   └── puertos/            # Port data
+├── results/                 # Analysis results (not included in repository)
+├── src/                     # Main analysis scripts
 │   ├── port_sst_analysis_functions.py
 │   ├── port_sst_analysis_quick.py
 │   └── port_sst_analysis_weekly.py
-├── code/                    # Código adicional y utilidades
-│   ├── functions/          # Funciones auxiliares
-│   ├── notebooks/          # Jupyter notebooks para análisis
+├── code/                    # Supporting code and utilities
+│   ├── functions/          # Helper functions
+│   ├── notebooks/          # Jupyter notebooks for analysis
 │   ├── observed_sst_plots_all_ports.py
 │   ├── modis_chl_dbr_process_nc.sh
 │   ├── modis_sst_dbr_process_nc.sh
 │   └── sst_dbr_process_nc.sh
-├── requirements.txt         # Dependencias del proyecto
-└── README.md               # Este archivo
+├── requirements.txt         # Project dependencies
+└── README.md               # This file
 ```
 
-## Requisitos
+## Requirements
 
 - Python 3.8+
-- Dependencias listadas en `requirements.txt`
+- Dependencies listed in `requirements.txt`
 
-## Instalación
+## Installation
 
-1. Clonar el repositorio:
+1. Clone the repository:
 ```bash
 git clone https://github.com/dbrisaro/peru-fisheries-sst-analysis.git
 cd peru-fisheries-sst-analysis
 ```
 
-2. Crear y activar un entorno virtual:
+2. Create and activate a virtual environment:
 ```bash
 python -m venv venv
-source venv/bin/activate  # En Windows: venv\Scripts\activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-3. Instalar dependencias:
+3. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Datos Requeridos
+## Data Requirements
 
-Para ejecutar el análisis, necesitarás los siguientes archivos de datos:
+The analysis requires three main data sources:
 
-1. **Datos de SST**:
-   - Ubicación: `data/MODIS/processed/sst_anomaly_daily_2002_2025.nc`
-   - Contenido: Anomalías diarias de SST para el período 2002-2025
-   - Formato: NetCDF (.nc)
+1. **SST Data**:
+   - Location: `data/MODIS/processed/sst_anomaly_daily_2002_2025.nc`
+   - Daily SST anomalies from MODIS satellite data
+   - Covers the period 2002-2025
+   - Format: NetCDF (.nc)
 
-2. **Datos de Producción**:
-   - Ubicación: `data/imarpe/processed/df_produccion_combined_2002_2024_clean.csv`
-   - Contenido: Datos de producción pesquera diaria por puerto
-   - Formato: CSV
+2. **Production Data**:
+   - Location: `data/imarpe/processed/df_produccion_combined_2002_2024_clean.csv`
+   - Daily fisheries production records by port
+   - Provided by IMARPE (Peruvian Marine Research Institute)
+   - Format: CSV
 
-3. **Datos de Puertos**:
-   - Ubicación: `data/puertos/processed/ports_with_normal_angles_corrected.xlsx`
-   - Contenido: Información de puertos y sus ángulos normales
-   - Formato: Excel (.xlsx)
+3. **Port Data**:
+   - Location: `data/puertos/processed/ports_with_normal_angles_corrected.xlsx`
+   - Port locations and operational parameters
+   - Includes normal angles for each port
+   - Format: Excel (.xlsx)
 
-Por favor, contacta al administrador del proyecto para obtener acceso a estos archivos de datos.
+Please contact the project administrator to obtain access to these data files.
 
-## Uso
+## Analysis Scripts
 
-1. Asegúrate de tener todos los archivos de datos necesarios en las ubicaciones correctas.
+The project includes two main analysis approaches:
 
-2. Para análisis diario:
-```bash
-python src/port_sst_analysis_quick.py
-```
+1. **Daily Analysis** (`src/port_sst_analysis_quick.py`):
+   - Examines daily SST anomalies and their impact
+   - Provides high-resolution temporal analysis
+   - Generates daily loss estimates
 
-3. Para análisis semanal:
-```bash
-python src/port_sst_analysis_weekly.py
-```
+2. **Weekly Analysis** (`src/port_sst_analysis_weekly.py`):
+   - Aggregates data to weekly time steps
+   - Reduces noise in the analysis
+   - Offers broader temporal patterns
 
-4. Para procesar datos MODIS:
+3. **MODIS Data Processing**:
 ```bash
 bash code/modis_sst_dbr_process_nc.sh
 ```
+This script processes raw MODIS SST data into the required format.
 
-## Resultados
+## Output
 
-Los resultados se guardarán en el directorio `results/` con la siguiente estructura:
+The analysis generates two main types of results:
 
-```
-results/
-├── port_sst_analysis_daily/
-│   ├── annual_losses.csv
-│   └── annual_losses_exceedance.png
-└── port_sst_analysis_weekly/
-    ├── annual_losses.csv
-    └── annual_losses_exceedance.png
-```
+1. **Annual Losses** (`annual_losses.csv`):
+   - Total economic losses per year
+   - Port-specific breakdowns
+   - Statistical summaries
 
-## Contribuir
+2. **Exceedance Plots** (`annual_losses_exceedance.png`):
+   - Visual representation of loss probabilities
+   - Helps identify extreme events
+   - Supports risk assessment
 
-1. Fork el repositorio
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+Results are saved in the `results/` directory, organized by analysis type (daily/weekly).
 
-## Licencia
+## Contributing
 
-Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles. 
+We welcome contributions to improve the analysis. If you'd like to contribute:
+
+1. Fork the repository
+2. Create a branch for your changes
+3. Submit a pull request with a clear description of your modifications
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
