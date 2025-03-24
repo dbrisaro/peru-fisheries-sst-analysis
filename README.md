@@ -11,10 +11,17 @@ peru_produccion/
 │   ├── imarpe/             # Datos de producción pesquera
 │   └── puertos/            # Datos de puertos
 ├── results/                 # Resultados del análisis (no incluidos en el repositorio)
-├── src/                     # Código fuente
+├── src/                     # Código fuente principal
 │   ├── port_sst_analysis_functions.py
 │   ├── port_sst_analysis_quick.py
 │   └── port_sst_analysis_weekly.py
+├── code/                    # Código adicional y utilidades
+│   ├── functions/          # Funciones auxiliares
+│   ├── notebooks/          # Jupyter notebooks para análisis
+│   ├── observed_sst_plots_all_ports.py
+│   ├── modis_chl_dbr_process_nc.sh
+│   ├── modis_sst_dbr_process_nc.sh
+│   └── sst_dbr_process_nc.sh
 ├── requirements.txt         # Dependencias del proyecto
 └── README.md               # Este archivo
 ```
@@ -28,8 +35,8 @@ peru_produccion/
 
 1. Clonar el repositorio:
 ```bash
-git clone https://github.com/tu-usuario/peru_produccion.git
-cd peru_produccion
+git clone https://github.com/dbrisaro/peru-fisheries-sst-analysis.git
+cd peru-fisheries-sst-analysis
 ```
 
 2. Crear y activar un entorno virtual:
@@ -76,6 +83,11 @@ python src/port_sst_analysis_quick.py
 3. Para análisis semanal:
 ```bash
 python src/port_sst_analysis_weekly.py
+```
+
+4. Para procesar datos MODIS:
+```bash
+bash code/modis_sst_dbr_process_nc.sh
 ```
 
 ## Resultados
