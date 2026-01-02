@@ -91,7 +91,8 @@ print("Calculando matriz de pérdidas por puerto...")
 losses_matrix_daily_wages = calculate_losses_matrix_from_daily_wages(anomaly_matrix_samples_binary, port_losses)
 losses_matrix_daily_wages.to_csv(f'{output_dir}/data/port_losses_matrix_daily_wages_{percentile_key}.csv')
 
-losses_matrix_regression = calculate_losses_matrix_from_regression(anomaly_matrix_samples_ssta, results_regression, daily_price_per_ton=100)
+price_per_ton = 100
+losses_matrix_regression = calculate_losses_matrix_from_regression(anomaly_matrix_samples_ssta, results_regression, daily_price_per_ton=price_per_ton)
 losses_matrix_regression.to_csv(f'{output_dir}/data/port_losses_matrix_regression.csv')
 
 print("Calculando pérdidas totales anuales...")
